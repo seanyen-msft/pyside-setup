@@ -1,18 +1,15 @@
-init:
-  - cmd: C:\Python27-x64\python.exe --version
-  - cmd: C:\Python27-x64\python.exe -c "import platform; print(platform.machine())"
+platform: x64
+configuration: Release
+image: Visual Studio 2015
+
+environment:
+  matrix:
+    - PYTHON: "C:\\Python27-x64"
 
 install:
-  - cmd: git submodule update --init --recursive
+ - set PATH=%PYTHON%\Scripts;%PYTHON%;%PATH%
 
 build_script:
-  - cmd: cmake --version
-  - cmd: rem curl -sLO https://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-windows-x86-msvc2013-5.5.1.exe
-  - cmd: rem 7z 9.20 fails to unpack the archive properly (only 13/585Mb are unpacked)
-  - cmd: rem 7z x qt-opensource-windows-x86-msvc2013-5.5.1.exe
-  - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
-  - cmd: set QTDIR=C:\Qt\5.5\msvc2013_64
-  - cmd: set PATH=%PATH%;%QTDIR%\bin
-  - cmd: qmake --version
-  - cmd: cd C:\projects\pyside2-setup
-  - cmd: C:\Python27-x64\python.exe setup.py install --openssl=C:\OpenSSL-Win32
+ - call "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64
+ - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64
+ - python setup.py build --qmake=C:\Qt\5.11.1\msvc2015_64\bin\qmake.exe --build-tests --ignore-git --jobs=1
