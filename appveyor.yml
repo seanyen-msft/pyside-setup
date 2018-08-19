@@ -9,6 +9,9 @@ environment:
 install:
  - set PATH=%PYTHON%\Scripts;%PYTHON%;%PATH%
  - git submodule update --init --recursive
+ - ps: Start-FileDownload 'http://download.qt.io/development_releases/prebuilt/libclang/libclang-release_39-windows-vs2015_64.7z'
+ - 7z e libclang-release_39-windows-vs2015_64.7z
+ - dir
 
 build_script:
  - call "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64
