@@ -10,7 +10,7 @@ install:
  - set PATH=%PYTHON%\Scripts;%PYTHON%;%PATH%
  - git submodule update --init --recursive
  - ps: Start-FileDownload 'http://download.qt.io/development_releases/prebuilt/libclang/libclang-release_39-windows-vs2015_64.7z'
- - 7z e libclang-release_39-windows-vs2015_64.7z
+ - 7z x libclang-release_39-windows-vs2015_64.7z -y
  - dir
 
 build_script:
